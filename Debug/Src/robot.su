@@ -1,0 +1,11 @@
+robot.c:28:1:sm_state_transition	24	static
+robot.c:33:6:robot_run	16	static
+robot.c:38:13:sm_mapping_forward	16	static
+robot.c:46:13:sm_turning_left	16	static
+robot.c:51:13:sm_turning_right	16	static
+robot.c:56:13:sm_turn_around	16	static
+robot.c:61:13:sm_solving	16	static
+robot.c:66:13:sm_stop	16	static
+robot.c:71:13:sm_racing	16	static
+robot.c:76:13:robot_orientation_cw	16	static
+robot.c:81:13:robot_orientation_ccw	16	static
