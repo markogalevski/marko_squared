@@ -1,2 +1,4 @@
 #ignore the drivers directory
 /Drivers
+/Release
+/Debug
