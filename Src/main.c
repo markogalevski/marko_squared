@@ -70,7 +70,7 @@ static void MX_TIM6_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+robot_t markobot;
 /* USER CODE END 0 */
 
 /**

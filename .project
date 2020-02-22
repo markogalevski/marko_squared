@@ -27,4 +27,11 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>Api</name>
+			<type>2</type>
+			<location>/home/marko/Documents/embedded_workspace/marko_squared/VL53L0X_1.0.2/Api</location>
+		</link>
+	</linkedResources>
 </projectDescription>

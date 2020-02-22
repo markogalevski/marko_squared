@@ -59,6 +59,7 @@
 extern I2C_HandleTypeDef hi2c2;
 extern TIM_HandleTypeDef htim6;
 extern UART_HandleTypeDef huart4;
+extern robot_t markobot;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -206,6 +207,7 @@ void EXTI1_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI1_IRQn 0 */
 
+	markobot->next_state = STATE_STOP;
   /* USER CODE END EXTI1_IRQn 0 */
   /* USER CODE BEGIN EXTI1_IRQn 1 */
 
@@ -218,7 +220,14 @@ void EXTI1_IRQHandler(void)
 void EXTI9_5_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI9_5_IRQn 0 */
-
+	if (markobot->current_state == STATE_STOP)
+	{
+		markobot->next_state = STATE_SOLVING;
+	}
+	if (markobot->current_state == STATE_SOLVING_COMPLETE)
+	{
+		markobot->next_state = STATE_RACING
+	}
   /* USER CODE END EXTI9_5_IRQn 0 */
   /* USER CODE BEGIN EXTI9_5_IRQn 1 */
 
@@ -283,7 +292,10 @@ void UART4_IRQHandler(void)
 void TIM6_DAC_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
-
+	if (markobot.current_state == STATE_FORWARD)
+	{
+		markobot.next_state = STATE_DEAD_RECKONING;
+	}
   /* USER CODE END TIM6_DAC_IRQn 0 */
   /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
 
