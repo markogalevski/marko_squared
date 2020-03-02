@@ -3,3 +3,8 @@
 /Release
 /Debug
 /VL53L0X_1.0.2/ApiExample
+/Debug
+/objs
+/lib
+/tests
+Makefile*
