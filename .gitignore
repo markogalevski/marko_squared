@@ -1,10 +1,13 @@
 #ignore the drivers directory
 /Drivers
 /Release
+/Release/*
 /Debug
+/Debug/*
 /VL53L0X_1.0.2/ApiExample
-/Debug
 /objs
 /lib
 /tests
 Makefile*
+*.o
+./*/*.o

@@ -277,7 +277,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
   /* USER CODE END TIM2_MspPostInit 0 */
     __HAL_RCC_GPIOA_CLK_ENABLE();
     /**TIM2 GPIO Configuration    
-    PA5     ------> TIM2_CH1 
+    PA5     ------> TIM2_CH1
     */
     GPIO_InitStruct.Pin = LEFT_MOTOR_PWM_PIN_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -295,10 +295,10 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
   /* USER CODE BEGIN TIM5_MspPostInit 0 */
 
   /* USER CODE END TIM5_MspPostInit 0 */
-  
+
     __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**TIM5 GPIO Configuration    
-    PA0-WKUP     ------> TIM5_CH1 
+    /**TIM5 GPIO Configuration
+    PA0-WKUP     ------> TIM5_CH1
     */
     GPIO_InitStruct.Pin = RIGHT_MOTOR_PWM_PIN_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;

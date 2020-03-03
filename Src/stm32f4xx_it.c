@@ -59,6 +59,7 @@
 extern I2C_HandleTypeDef hi2c2;
 extern TIM_HandleTypeDef htim6;
 extern UART_HandleTypeDef huart4;
+extern robot_t *markobot;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -205,7 +206,6 @@ void SysTick_Handler(void)
 void EXTI1_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI1_IRQn 0 */
-
 	markobot->next_state = STATE_STOP;
   /* USER CODE END EXTI1_IRQn 0 */
   /* USER CODE BEGIN EXTI1_IRQn 1 */
@@ -213,47 +213,56 @@ void EXTI1_IRQHandler(void)
   /* USER CODE END EXTI1_IRQn 1 */
 }
 
-/**
-  * @brief This function handles EXTI line2 interrupt.
-  */
 void EXTI2_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI2_IRQn 0 */
-
+  if(markobot->next_state != STATE_STOP)
+    {
+    if (markobot->current_state == STATE_FORWARD && markobot->next_state != STATE_MEASURE)
+      {
+	markobot->next_state = STATE_TURNING_LEFT;
+      }
   /* USER CODE END EXTI2_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_2);
   /* USER CODE BEGIN EXTI2_IRQn 1 */
-
-  /* USER CODE END EXTI2_IRQn 1 */
+    }
+  /* USER CODE END EXT2_IRQn 1 */
 }
 
-/**
-  * @brief This function handles EXTI line3 interrupt.
-  */
 void EXTI3_IRQHandler(void)
 {
-  /* USER CODE BEGIN EXTI3_IRQn 0 */
+  /* USER CODE BEGIN EXTI2_IRQn 0 */
+  if (markobot->next_state != STATE_STOP)
+    {
+      if (markobot->next_state != STATE_MEASURE)
+	{
+	  if (markobot->current_state == STATE_FORWARD && markobot->next_state != STATE_TURNING_LEFT)
+	    {
+	      markobot->next_state = STATE_TURNING_RIGHT;
+	    }
+	}
+    }
+  /* USER CODE END EXTI2_IRQn 0 */
+  /* USER CODE BEGIN EXTI2_IRQn 1 */
 
-  /* USER CODE END EXTI3_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_3);
-  /* USER CODE BEGIN EXTI3_IRQn 1 */
-
-  /* USER CODE END EXTI3_IRQn 1 */
+  /* USER CODE END EXT2_IRQn 1 */
 }
-
 /**
   * @brief This function handles EXTI line[9:5] interrupts.
   */
 void EXTI9_5_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI9_5_IRQn 0 */
-	if (markobot->current_state == STATE_STOP)
+	if (markobot->current_state == STATE_POWER_ON)
+	  {
+	    markobot->next_state = STATE_FORWARD;
+	  }
+	else if (markobot->current_state == STATE_STOP)
 	{
 		markobot->next_state = STATE_SOLVING;
 	}
-	if (markobot->current_state == STATE_SOLVING_COMPLETE)
+	else if (markobot->current_state == STATE_SOLVING_COMPLETE)
 	{
-		markobot->next_state = STATE_RACING
+		markobot->next_state = STATE_RACING;
 	}
   /* USER CODE END EXTI9_5_IRQn 0 */
   /* USER CODE BEGIN EXTI9_5_IRQn 1 */
@@ -262,42 +271,27 @@ void EXTI9_5_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles I2C2 event interrupt.
-  */
-void I2C2_EV_IRQHandler(void)
-{
-  /* USER CODE BEGIN I2C2_EV_IRQn 0 */
-
-  /* USER CODE END I2C2_EV_IRQn 0 */
-  /* USER CODE BEGIN I2C2_EV_IRQn 1 */
-
-  /* USER CODE END I2C2_EV_IRQn 1 */
-}
-
-/**
-  * @brief This function handles I2C2 error interrupt.
-  */
-void I2C2_ER_IRQHandler(void)
-{
-  /* USER CODE BEGIN I2C2_ER_IRQn 0 */
-
-  /* USER CODE END I2C2_ER_IRQn 0 */
-  /* USER CODE BEGIN I2C2_ER_IRQn 1 */
-
-  /* USER CODE END I2C2_ER_IRQn 1 */
-}
-
-/**
   * @brief This function handles EXTI line[15:10] interrupts.
   */
 void EXTI15_10_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
-
+  if (markobot->next_state != STATE_STOP)
+    {
+      if (markobot->next_state != STATE_MEASURE)
+	{
+	  if(markobot->current_state == STATE_FORWARD
+	      && (markobot->next_state != STATE_TURNING_LEFT || markobot->next_state != STATE_TURNING_RIGHT))
+	    {
+	      markobot->next_state = STATE_TURNING_AROUND;
+	    }
   /* USER CODE END EXTI15_10_IRQn 0 */
+
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 
   /* USER CODE END EXTI15_10_IRQn 1 */
+	}
+    }
 }
 
 /**
@@ -319,10 +313,13 @@ void UART4_IRQHandler(void)
 void TIM6_DAC_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
-	if (markobot.current_state == STATE_FORWARD)
+  if (markobot->next_state != STATE_STOP)
+    {
+	if (markobot->current_state == STATE_FORWARD)
 	{
-		markobot.next_state = STATE_DEAD_RECKONING;
+		markobot->next_state = STATE_MEASURE;
 	}
+    }
   /* USER CODE END TIM6_DAC_IRQn 0 */
   /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
 

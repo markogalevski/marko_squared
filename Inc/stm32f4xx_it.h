@@ -43,7 +43,12 @@
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-
+#define BUTTON_PRESS() 			EXTI9_5_IRQHandler()
+#define LEFT_SENSOR_INTERRUPT()  	EXTI2_IRQHandler()
+#define RIGHT_SENSOR_INTERRUPT() 	EXTI3_IRQHandler()
+#define FRONT_SENSOR_INTERRUPT()	EXTI15_10_IRQHandler()
+#define MEASURE_TIMER_INTERRUPT()	TIM6_DAC_IRQHandler()
+#define FLOOR_SENSOR_INTERRUPT()	EXTI1_IRQHandler()
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
